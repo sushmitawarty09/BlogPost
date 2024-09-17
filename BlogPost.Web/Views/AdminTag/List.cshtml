@@ -1,0 +1,81 @@
+﻿@model List<BlogPost.Web.Models.Domain.Tag>
+
+@{
+}
+
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Show All Tags - Admin Functionality</h1>
+    </div>
+</div>
+
+<form method="get" asp-controller="AdminTag" asp-action="List">
+    <div class="container mt-3">
+        <div class="row">
+            <div class="col col-md-3 d-flex">
+                <input type="text" name="QuertString" class="form-control" value="@ViewBag.searchQuery" />
+                <button type="submit" class="btn btn-warning ms-3">Search</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="container py-5">
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name
+                    <span>
+                        <span>
+                            <a class="btn btn-light" asp-controller="AdminTag" asp-action="List" asp-route-sortBy="Name"
+                            asp-route-sortDirection="Asc" asp-route-QuertString="@ViewBag.searchQuery">
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                        </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="AdminTag" asp-action="List" asp-route-sortBy="Name"
+                                   asp-route-sortDirection="Des" asp-route-QuertString="@ViewBag.searchQuery">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                    </span>
+                    </th>
+                    <th>Display Name
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="AdminTag" asp-action="List" asp-route-sortBy="DisplayName"
+                                   asp-route-sortDirection="Asc" asp-route-QuertString="@ViewBag.searchQuery">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="AdminTag" asp-action="List" asp-route-sortBy="DisplayName"
+                                   asp-route-sortDirection="Des" asp-route-QuertString="@ViewBag.searchQuery">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
+                    </th>
+                    <th> </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        <td>@tag.Id</td>
+                        <td>@tag.Name</td>
+                        <td>@tag.DisplayName</td>
+                        <td><a asp-area="" asp-controller="AdminTag" asp-action="Edit" asp-route-id=@tag.Id>Edit</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No Tags Found!</p>
+    }
+</div>
